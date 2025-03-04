@@ -1,6 +1,21 @@
 PROJECT_NAME=pokedex
-VENV=.env
+VENV=.venv
 ACTIVATE=$(VENV)/bin/activate
+
+# Création du fichier `.env`
+env:
+	@echo "📄 Création du fichier .env..."
+	@if [ ! -f .env ]; then \
+		echo "API_URL_POKEMON=http://127.0.0.1:5000/api/pokemon" > .env; \
+		echo "API_URL_ABILITY=http://127.0.0.1:5000/api/ability" >> .env; \
+		echo "API_URL_AUTH=http://127.0.0.1:5000/api/auth" >> .env; \
+		echo "JWT_SECRET_KEY=super-secret-key" >> .env; \
+		echo "✅ Fichier .env généré."; \
+		set -a && source .env && set +a
+	else \
+		echo ".env existe déjà, pas de modification."; \
+	fi
+
 
 # Installation des dépendances
 install:
