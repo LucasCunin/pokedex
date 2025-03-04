@@ -1,0 +1,7 @@
+__pycache__/
+truc
+
+.env
+.envrc
+
+instance/

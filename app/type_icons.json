@@ -1,0 +1,20 @@
+{
+    "fighting": "image/120px-Miniature_Type_Combat_EV.png",
+    "dragon": "image/120px-Miniature_Type_Dragon_EV.png",
+    "water": "image/120px-Miniature_Type_Eau_EV.png",
+    "fire": "image/120px-Miniature_Type_Feu_EV.png",
+    "fairy": "image/120px-Miniature_Type_Fée_EV.png",
+    "ice": "image/120px-Miniature_Type_Glace_EV.png",
+    "bug": "image/120px-Miniature_Type_Insecte_EV.png",
+    "normal": "image/120px-Miniature_Type_Normal_EV.png",
+    "grass": "image/120px-Miniature_Type_Plante_EV.png",
+    "poison": "image/120px-Miniature_Type_Poison_EV.png",
+    "psychic": "image/120px-Miniature_Type_Psy_EV.png",
+    "rock": "image/120px-Miniature_Type_Roche_EV.png",
+    "ground": "image/120px-Miniature_Type_Sol_EV.png",
+    "ghost": "image/120px-Miniature_Type_Spectre_EV.png",
+    "dark": "image/120px-Miniature_Type_Ténèbres_EV.png",
+    "flying": "image/120px-Miniature_Type_Vol_EV.png",
+    "electric": "image/120px-Miniature_Type_Électrik_EV.png",
+    "steel": "image/acier.png"
+}
