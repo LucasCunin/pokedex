@@ -43,7 +43,7 @@ else:
 ####PAge PRINCIPALE####
 #Barre latérale pour la navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Choisissez une recherche :", ["🔍 Pokémon", "⚡ Ability"])
+page = st.sidebar.radio("Choisissez une recherche :", ["🔍 Pokémon", "⚡ Ability", "📜 Liste Pokémon"])
 
 st.title("Pokédex LC")
 
@@ -162,3 +162,63 @@ elif page == "⚡ Ability":
                 st.write("Aucun Pokémon ne possède cette Ability.")
     else:
         st.error("Ability non trouvée. 😢")
+
+
+#### Liste Pokémon paginée ####
+elif page == "📜 Liste Pokémon":
+    st.header("📜 Liste des Pokémon avec pagination")
+
+    # Sélection du nombre de Pokémon par page
+    per_page = st.slider("Nombre de Pokémon par page", min_value=1, max_value=25, value=10, step=1)
+
+    # Numéro de page stocké dans la session
+    if "current_page" not in st.session_state:
+        st.session_state["current_page"] = 1
+
+
+    headers = {"Authorization": f"Bearer {st.session_state['access_token']}"}
+    response = requests.get(f"{API_URL_POKEMON}/pokemon_name_list_pagine/{per_page}", headers=headers)
+
+    if response.status_code == 200:
+        paginated_pokemon_names = response.json()
+        total_pages = len(paginated_pokemon_names)
+
+        current_page_key = str(st.session_state["current_page"])  
+        if current_page_key in paginated_pokemon_names:
+            pokemon_names_on_page = paginated_pokemon_names[current_page_key]
+
+            pokemon_details = []
+            for pokemon_name in pokemon_names_on_page:
+                detail_response = requests.get(f"{API_URL_POKEMON}/{pokemon_name}", headers=headers)
+                if detail_response.status_code == 200:
+                    pokemon_details.append(detail_response.json())
+
+            st.subheader(f"📄 Page {st.session_state['current_page']} / {total_pages}")
+
+            for pokemon in pokemon_details:
+                st.subheader(f"⭐ {pokemon['name'].capitalize()}")
+                st.image(pokemon["image"], width=100)
+                st.write(f"**Taille :** {pokemon['height']} dm")
+                st.write(f"**Poids :** {pokemon['weight']} hg")
+                st.write(f"**Type(s) :** {', '.join(pokemon['types'])}")
+
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col1:
+            if st.session_state["current_page"] > 1:
+                if st.button("⬅️ Page précédente"):
+                    st.session_state["current_page"] -= 1
+                    st.rerun()
+        with col3:
+            if st.session_state["current_page"] < total_pages:
+                if st.button("➡️ Page suivante"):
+                    st.session_state["current_page"] += 1
+                    st.rerun()
+
+    else:
+        st.error("Impossible de récupérer la liste des Pokémon.")
+
+
+#### pokedle #####
+
+
+

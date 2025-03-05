@@ -29,6 +29,51 @@ def fetch_lst_pokemon():
         return lst
     return None
 
+def fetch_list_pokemon_pagine(n):
+    dic = {}
+    page_num = 1
+    n = int(n)
+    url = "https://pokeapi.co/api/v2/pokemon?limit=10000"
+    
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        all_pokemon = data['results']  
+        dic[page_num] = []  
+        
+        for pokemon in all_pokemon:
+            poke_name = pokemon['name']
+            data_pokemon = fetch_pokemon(poke_name)
+            if data_pokemon:
+                dic[page_num].append(data_pokemon) 
+                
+                if len(dic[page_num]) >= n:  
+                    page_num += 1  
+                    dic[page_num] = [] 
+        return dic
+    return None
+
+def fetch_pokemon_name_list_pagine(n):
+    dic = {}
+    page_num = 1
+    n = int(n)
+    url = "https://pokeapi.co/api/v2/pokemon?limit=10000"
+    
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        all_pokemon = data['results']  
+        dic[page_num] = []  
+        
+        for pokemon in all_pokemon:
+            dic[page_num].append(pokemon['name'])
+
+            if len(dic[page_num]) >= n:  
+                    page_num += 1  
+                    dic[page_num] = []
+        return dic
+    return None
+
 def fetch_evolution_chain(name):
     """
     Récupère la liste complète des Pokémon dans la chaîne d'évolution.
