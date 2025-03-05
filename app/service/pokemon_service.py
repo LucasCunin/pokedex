@@ -1,20 +1,34 @@
 import requests
 
 def fetch_pokemon(name):
-    """Récupère les informations d'un Pokémon depuis PokeAPI"""
+    """Récupère les informations détaillées d'un Pokémon."""
     url = f"https://pokeapi.co/api/v2/pokemon/{name.lower()}"
     response = requests.get(url)
 
     if response.status_code == 200:
         data = response.json()
+        
+        species_url = data["species"]["url"]
+        species_response = requests.get(species_url)
+        if species_response.status_code == 200:
+            species_data = species_response.json()
+            color = species_data["color"]["name"]
+            origin_game = species_data["generation"]["name"]
+        else:
+            color = "Inconnu"
+            origin_game = "Inconnu"
+
         return {
             "name": data["name"],
             "height": data["height"],
             "weight": data["weight"],
             "types": [t["type"]["name"] for t in data["types"]],
-            "image": data["sprites"]["front_default"]
+            "image": data["sprites"]["front_default"],
+            "color": color,
+            "generation": len(origin_game.split('-')[1])
         }
     return None
+
 
 def fetch_lst_pokemon():
     lst = []
