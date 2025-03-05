@@ -3,6 +3,7 @@ from front.auth_front import login, logout
 from front.pokemon_front import pokemon_page
 from front.ability_front import ability_page
 from front.pokedle_front import game_page
+from front.register_page import register_page
 
 # Chargement du Token dans la session
 if "access_token" not in st.session_state:
@@ -20,7 +21,7 @@ else:
 
 # Navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Choisissez une recherche :", ["🔍 Pokémon", "⚡ Ability", "🎮 Pokédle"])
+page = st.sidebar.radio("Choisissez une recherche :", ["🔍 Pokémon", "⚡ Ability", "🎮 Pokédle","📝 Inscription"])
 
 # Chargement des pages correspondantes
 if page == "🔍 Pokémon":
@@ -29,3 +30,5 @@ elif page == "⚡ Ability":
     ability_page()
 elif page == "🎮 Pokédle":
     game_page()
+elif page == "📝 Inscription":
+    register_page()
